@@ -1,11 +1,12 @@
 'use strict';
 const { PhoneDetails } = require('../models');
 
+
 const fs = require('fs/promises');
 const path = require('path');
 
 const directoryPath = path.join(path.dirname(__dirname), 'api/phones');
-const phoneDetails = [];
+const phones = [];
 
 const readJsonFiles = async () => {
 
@@ -24,10 +25,15 @@ const readJsonFiles = async () => {
       // Load the JSON data from the file
       try {
         const jsonData = await fs.readFile(path.join(directoryPath, file), 'utf-8');
-        const data = JSON.parse(jsonData);
-        Object.assign(data, { createdAt: new Date() });
+        const data = JSON.parse(jsonData)
+          .map(eachData => {
+            eachData.description = JSON.stringify(eachData.description);
+            return Object.assign(eachData, { createdAt: new Date() });
+          });
+        
         data.description = JSON.stringify(data.description);
-        phoneDetails.push(data);
+
+        phones.push(...data);
       } catch (e) {
         console.error(`Error parsing JSON file ${file}: ${e}`);
       }
@@ -44,9 +50,9 @@ module.exports = {
   async up (queryInterface) {
     await initPhones();
 
-    console.log(phoneDetails, 1);
+    console.log(phones[0]);
 
-    await queryInterface.bulkInsert(PhoneDetails.tableName, phoneDetails, {});
+    await queryInterface.bulkInsert(PhoneDetails.tableName, phones, {});
   },
 
   async down (queryInterface) {
