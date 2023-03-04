@@ -1,10 +1,13 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "postgresql",
-    "database": "postgres",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "vadiimvooo",
+    "password": "r5weTSjvPWY0",
+    "database": "DataDefendersDB",
+    "host": "ep-black-wind-684985.eu-central-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    }
   },
   "test": {
     "username": "postgre",
@@ -14,10 +17,13 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "postgresql",
-    "database": "postgres",
-    "host": "",
-    "dialect": "postgres"
+    "username": "vadiimvooo",
+    "password": "r5weTSjvPWY0",
+    "database": "DataDefendersDB",
+    "host": "ep-black-wind-684985.eu-central-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    }
   }
 }
