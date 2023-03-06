@@ -24,11 +24,11 @@ module.exports = {
         allowNull: false,
       },
       priceRegular: {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       priceDiscount: {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       colorsAvailable: {

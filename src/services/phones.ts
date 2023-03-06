@@ -1,5 +1,6 @@
 const { Phones } = require('../../models');
 import { Phone as PhoneType } from '../types/Phone';
+import { SortBy } from '../types/SortBy';
 
 function normalize(phone: PhoneType) {
   const copyOfPhone = { ...phone };
@@ -7,11 +8,42 @@ function normalize(phone: PhoneType) {
   return copyOfPhone;
 }
 
-function getAll() {
-  return Phones.findAll({
-    order: ['createdAt'],
-    raw: true
-  });
+async function getMany(
+  page: number,
+  perPage: number,
+  sortBy: string,
+) {
+  let loadedData: PhoneType[];
+
+  switch(sortBy) {
+  case SortBy.Alphabetically:
+    loadedData = await Phones.findAll({
+      order: ['name'],
+      raw: true,
+    });
+    break;
+
+  case SortBy.Cheapest:
+    loadedData = await Phones.findAll({
+      order: ['price'],
+      raw: true,
+    });
+    break;
+
+  default:
+    loadedData = await Phones.findAll({
+      order: [['year', 'DESC']],
+      raw: true,
+    });
+    break;
+  }
+
+  const phonesToSkip = perPage * (page - 1);
+  const result = loadedData
+    .slice(phonesToSkip, phonesToSkip + perPage)
+    .map(normalize);
+
+  return result;
 }
 
 function findById(phoneId: string) {
@@ -20,6 +52,6 @@ function findById(phoneId: string) {
 
 export const phonesServices = {
   normalize,
-  getAll,
-  findById
+  getMany,
+  findById,
 };

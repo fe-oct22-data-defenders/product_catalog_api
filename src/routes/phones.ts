@@ -3,5 +3,5 @@ import { phonesControllers } from '../controllers/phones';
 
 export const router = express.Router();
 
-router.get('/', phonesControllers.getAll);
+router.get('/', phonesControllers.getMany);
 router.get('/:phoneId', phonesControllers.getOne);
