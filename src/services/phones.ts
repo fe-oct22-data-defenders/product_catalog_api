@@ -43,7 +43,10 @@ async function getMany(
     .slice(phonesToSkip, phonesToSkip + perPage)
     .map(normalize);
 
-  return result;
+  return {
+    result,
+    loadedData: loadedData.length,
+  };
 }
 
 function findById(phoneId: string) {
