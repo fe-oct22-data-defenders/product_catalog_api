@@ -1,10 +1,24 @@
 import { Request, Response } from 'express';
 import { phonesServices } from '../services/phones';
+import { SortBy } from '../types/SortBy';
 
-const getAll = async (req: Request, res: Response) => {
-  const loadPhones = await phonesServices.getAll();
+const getMany = async (req: Request, res: Response) => {
+  const normilizedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const params = normilizedUrl.searchParams;
+  const page = Number(params.get('page')) || 1;
+  const perPage = Number(params.get('perPage')) || 16;
+  const sortBy = params.get('sortBy') || SortBy.Newest;
 
-  res.send(loadPhones.map(phonesServices.normalize));
+  const loadPhones = await phonesServices.getMany(
+    page,
+    perPage,
+    sortBy,
+  );
+
+  res.send({
+    data: loadPhones,
+    total: loadPhones.length,
+  });
 };
 
 const getOne = async (req: Request, res: Response) => {
@@ -18,18 +32,16 @@ const getOne = async (req: Request, res: Response) => {
       return;
     }
 
-    res.send(
-      phonesServices.normalize(findPhoneById.get({ plain: true })),
-    );
+    res.send(phonesServices.normalize(findPhoneById.get({ plain: true })));
 
     return findPhoneById;
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 };
 
 export const phonesControllers = {
-  getAll, 
+  getMany,
   getOne,
 };

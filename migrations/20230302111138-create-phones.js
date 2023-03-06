@@ -30,11 +30,11 @@ module.exports = {
           allowNull: false,
         },
         fullPrice: {
-          type: Sequelize.DECIMAL(10, 2),
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         price: {
-          type: Sequelize.DECIMAL(10, 2),
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         screen: {
@@ -54,7 +54,7 @@ module.exports = {
           allowNull: false,
         },
         year: {
-          type: Sequelize.DECIMAL(10, 2),
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         image: {
