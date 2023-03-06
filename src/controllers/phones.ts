@@ -16,8 +16,8 @@ const getMany = async (req: Request, res: Response) => {
   );
 
   res.send({
-    data: loadPhones,
-    total: loadPhones.length,
+    data: loadPhones.result,
+    total: loadPhones.loadedData,
   });
 };
 
