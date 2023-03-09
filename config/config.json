@@ -1,13 +1,11 @@
 {
   "development": {
-    "username": "vadiimvooo",
-    "password": "r5weTSjvPWY0",
-    "database": "DataDefendersDB",
-    "host": "ep-black-wind-684985.eu-central-1.aws.neon.tech",
+    "username": "postgres",
+    "password": "fUmYi672aSoYFAGcaygd",
+    "database": "railway",
+    "host": "containers-us-west-201.railway.app",
     "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": true
-    }
+    "port": 6398
   },
   "test": {
     "username": "postgre",
@@ -17,13 +15,12 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "vadiimvooo",
-    "password": "r5weTSjvPWY0",
-    "database": "DataDefendersDB",
-    "host": "ep-black-wind-684985.eu-central-1.aws.neon.tech",
+    "username": "postgres",
+    "password": "fUmYi672aSoYFAGcaygd",
+    "database": "railway",
+    "host": "containers-us-west-201.railway.app",
     "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": true
-    }
+    "port": 6398
   }
 }
+
