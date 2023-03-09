@@ -4,4 +4,5 @@ import { phonesControllers } from '../controllers/phones';
 export const router = express.Router();
 
 router.get('/', phonesControllers.getMany);
-router.get('/:phoneId', phonesControllers.getOne);
+router.get('/new', phonesControllers.getNew);
+router.get('/discount', phonesControllers.getDiscount);

@@ -21,6 +21,24 @@ const getMany = async (req: Request, res: Response) => {
   });
 };
 
+const getDiscount = async (req: Request, res: Response) => {
+  const loadPhones = await phonesServices.getSomeCheapest();
+
+  res.send({
+    data: loadPhones.result,
+    total: loadPhones.loadedData,
+  });
+};
+
+const getNew = async (req: Request, res: Response) => {
+  const loadPhones = await phonesServices.getSomeNewest();
+
+  res.send({
+    data: loadPhones.result,
+    total: loadPhones.loadedData,
+  });
+};
+
 const getOne = async (req: Request, res: Response) => {
   const { phoneId } = req.params;
   try {
@@ -44,4 +62,6 @@ const getOne = async (req: Request, res: Response) => {
 export const phonesControllers = {
   getMany,
   getOne,
+  getDiscount,
+  getNew,
 };
