@@ -8,6 +8,39 @@ function normalize(phone: PhoneType) {
   return copyOfPhone;
 }
 
+async function getSomeNewest() {
+  const loadedData: PhoneType[] = await Phones.findAll({
+    order: [['year', 'DESC']],
+    raw: true,
+  });
+
+  const result = loadedData
+    .slice(0, 10)
+    .map(normalize);
+
+  return {
+    result,
+    loadedData: loadedData.length,
+  };
+}
+
+async function getSomeCheapest() {
+  const loadedData: PhoneType[] = await Phones.findAll({
+    order: ['price'],
+    raw: true,
+  });
+
+  const result = loadedData
+    .filter(phone => phone.fullPrice - phone.price >= 95)
+    .slice(0, 10)
+    .map(normalize);
+
+  return {
+    result,
+    loadedData: loadedData.length,
+  };
+}
+
 async function getMany(
   page: number,
   perPage: number,
@@ -57,4 +90,6 @@ export const phonesServices = {
   normalize,
   getMany,
   findById,
+  getSomeNewest,
+  getSomeCheapest,
 };
