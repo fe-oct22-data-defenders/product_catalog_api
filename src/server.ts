@@ -9,8 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/products', phoneDetailsRouter);
 app.use('/products', phonesRouter);
+app.use('/products', phoneDetailsRouter);
 
 app.listen(port, () => {
   console.log(`API is ready on http://localhost:${port} 🚀🚀🚀`);
