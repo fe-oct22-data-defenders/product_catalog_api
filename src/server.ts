@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/product_details', phoneDetailsRouter);
+app.use('/products', phoneDetailsRouter);
 app.use('/products', phonesRouter);
 
 app.listen(port, () => {
