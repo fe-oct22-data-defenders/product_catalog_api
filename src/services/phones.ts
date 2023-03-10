@@ -83,8 +83,9 @@ async function getMany(
 }
 
 function findById(phoneId: string) {
-  return Phones.findByPk(phoneId);
+  return Phones.findOne({ where: { phoneId } });
 }
+
 
 export const phonesServices = {
   normalize,
