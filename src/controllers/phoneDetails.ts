@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { phoneDetailsServices } from '../services/phoneDetails';
+import { phonesServices } from '../services/phones';
 
 const getOne = async (req: Request, res: Response) => {
   const { productId } = req.params;
   try {
     const findPhoneById = await phoneDetailsServices.findById(productId);
+    const findPhoneByIdShort = await phonesServices.findById(productId);
 
     if (!findPhoneById) {
       res.sendStatus(404);
@@ -13,7 +15,10 @@ const getOne = async (req: Request, res: Response) => {
     }
 
     res.send(
-      phoneDetailsServices.normalize(findPhoneById.get({ plain: true }))
+      {
+        longData: phoneDetailsServices.normalize(findPhoneById.get({ plain: true })),
+        shortData: phonesServices.normalize(findPhoneByIdShort.get({ plain: true })),
+      }
     );
 
     return findPhoneById;
