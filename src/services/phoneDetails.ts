@@ -1,4 +1,4 @@
-const { PhoneDetails } = require('../../models');
+const { PhoneDetails, AccessoriesDetails, TabletDetails } = require('../../models');
 import _ from 'lodash';
 import { PhoneDetails as PhoneDetailsType } from '../types/PhoneDetails';
 
@@ -10,7 +10,17 @@ function normalize(phone: PhoneDetailsType) {
 }
 
 function findById(phoneId: string) {
-  return PhoneDetails.findByPk(phoneId);
+  const typeOfDevice = phoneId.split('-')[1];
+
+  console.log(typeOfDevice);
+
+  if (typeOfDevice === 'ipad') {
+    return TabletDetails.findByPk(phoneId);
+  } else if (typeOfDevice === 'iphone') {
+    return PhoneDetails.findByPk(phoneId);
+  }
+
+  return AccessoriesDetails.findByPk(phoneId);
 }
 
 export const phoneDetailsServices = {
