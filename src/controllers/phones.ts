@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { phonesServices } from '../services/phones';
 import { SortBy } from '../types/SortBy';
+import { ProductType } from '../types/ProductType';
 
 const getMany = async (req: Request, res: Response) => {
   const normilizedUrl = new URL(req.url, `http://${req.headers.host}`);
@@ -8,11 +9,13 @@ const getMany = async (req: Request, res: Response) => {
   const page = Number(params.get('page')) || 1;
   const perPage = Number(params.get('perPage')) || 16;
   const sortBy = params.get('sortBy') || SortBy.Newest;
+  const productType = params.get('productType') || ProductType.Phones;
 
   const loadPhones = await phonesServices.getMany(
     page,
     perPage,
     sortBy,
+    productType,
   );
 
   res.send({

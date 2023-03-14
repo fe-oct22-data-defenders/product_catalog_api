@@ -1,11 +1,11 @@
 'use strict';
-const { Phones } = require('../models');
+const { Tablets } = require('../models');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      Phones.tableName,
+      Tablets.tableName,
       {
         id: {
           primaryKey: true,
@@ -71,6 +71,6 @@ module.exports = {
     );
   },
   async down(queryInterface) {
-    await queryInterface.dropTable(Phones.tableName);
+    await queryInterface.dropTable(Tablets.tableName);
   },
 };
