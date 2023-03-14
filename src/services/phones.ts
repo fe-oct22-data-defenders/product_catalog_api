@@ -1,5 +1,6 @@
-const { Phones } = require('../../models');
+const { Phones, Tablets, Accessories } = require('../../models');
 import { Phone as PhoneType } from '../types/Phone';
+import { ProductType } from '../types/ProductType';
 import { SortBy } from '../types/SortBy';
 
 function normalize(phone: PhoneType) {
@@ -14,9 +15,7 @@ async function getSomeNewest() {
     raw: true,
   });
 
-  const result = loadedData
-    .slice(0, 10)
-    .map(normalize);
+  const result = loadedData.slice(0, 10).map(normalize);
 
   return {
     result,
@@ -31,7 +30,7 @@ async function getSomeCheapest() {
   });
 
   const result = loadedData
-    .filter(phone => phone.fullPrice - phone.price >= 95)
+    .filter((phone) => phone.fullPrice - phone.price >= 95)
     .slice(0, 10)
     .map(normalize);
 
@@ -45,26 +44,36 @@ async function getMany(
   page: number,
   perPage: number,
   sortBy: string,
+  productType: string
 ) {
   let loadedData: PhoneType[];
+  let table;
 
-  switch(sortBy) {
+  if (productType === ProductType.Accessories) {
+    table = Accessories;
+  } else if (productType === ProductType.Tablets) {
+    table = Tablets;
+  } else {
+    table = Phones;
+  }
+
+  switch (sortBy) {
   case SortBy.Alphabetically:
-    loadedData = await Phones.findAll({
+    loadedData = await table.findAll({
       order: ['name'],
       raw: true,
     });
     break;
 
   case SortBy.Cheapest:
-    loadedData = await Phones.findAll({
+    loadedData = await table.findAll({
       order: ['price'],
       raw: true,
     });
     break;
 
   default:
-    loadedData = await Phones.findAll({
+    loadedData = await table.findAll({
       order: [['year', 'DESC']],
       raw: true,
     });
@@ -85,7 +94,6 @@ async function getMany(
 function findById(phoneId: string) {
   return Phones.findOne({ where: { phoneId } });
 }
-
 
 export const phonesServices = {
   normalize,
