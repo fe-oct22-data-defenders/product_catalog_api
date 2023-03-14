@@ -92,7 +92,15 @@ async function getMany(
 }
 
 function findById(phoneId: string) {
-  return Phones.findOne({ where: { phoneId } });
+  const typeOfDevice = phoneId.split('-')[1];
+
+  if (typeOfDevice === 'ipad') {
+    return Tablets.findOne({ where: { phoneId } });
+  } else if (typeOfDevice === 'iphone') {
+    return Phones.findOne({ where: { phoneId } });
+  }
+
+  return Accessories.findOne({ where: { phoneId } });
 }
 
 export const phonesServices = {
